@@ -7,3 +7,4 @@ pgeocode
 openai
 python-dotenv
 alembic
+psycopg2-binary
