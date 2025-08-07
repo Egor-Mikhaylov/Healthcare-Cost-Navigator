@@ -1,0 +1,2 @@
+seed:
+	python etl.py
