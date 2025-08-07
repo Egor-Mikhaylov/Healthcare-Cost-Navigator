@@ -20,7 +20,7 @@ docker compose up -d --build
 
 # 3 – create tables & seed sample data
 docker compose exec web alembic upgrade head
-docker compose exec web python etl.py      # CSV_LIMIT defaults to 40 000
+docker compose exec web python etl.py      # CSV_LIMIT defaults to 100 000
 ```
 
 API lives at **[http://localhost:8000](http://localhost:8000)**  • Docs at **/docs**
@@ -62,7 +62,7 @@ curl "http://localhost:8000/providers?drg=039"
 curl "http://localhost:8000/providers?zip=36301&radius_km=50"
 
 # 3. Combined DRG + geography search
-curl "http://localhost:8000/providers?drg=470&zip=10001&radius_km=40"
+curl "http://localhost:8000/providers?drg=025&zip=10001&radius_km=40"
 
 # ─────  POST /ask  ───────────────────────────────────────────────────
 # 4. Average covered charge for a DRG (NL → SQL)
@@ -76,6 +76,16 @@ curl -X POST http://localhost:8000/ask -H "Content-Type: application/json" \
 # 6. Highest‑rated providers overall
 curl -X POST http://localhost:8000/ask -H "Content-Type: application/json" \
      -d '{"question":"Which are the highest rated providers?"}'
+
+# 7. What's the weather today (fallback)
+curl -X POST http://localhost:8000/ask \
+     -H "Content-Type: application/json" \
+     -d '{"question":"What’s the weather today?"}'
+
+# 8. Best-rated cardiac hospitals near 10032
+curl -X POST http://localhost:8000/ask \
+     -H "Content-Type: application/json" \
+     -d '{"question":"Which hospitals have the best ratings for heart surgery near 10032?"}'
 ```
 
 ---
