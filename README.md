@@ -18,7 +18,7 @@ cp .env.example .env
 # 2 – build + start db + api
 docker compose up -d --build
 
-# 3 – create tables & seed sample data (≈ 7 s for the 40 k‑row subset)
+# 3 – create tables & seed sample data
 docker compose exec web alembic upgrade head
 docker compose exec web python etl.py      # CSV_LIMIT defaults to 40 000
 ```
@@ -33,7 +33,7 @@ API lives at **[http://localhost:8000](http://localhost:8000)**  • Docs at
 pip install -r requirements.txt
 export DB_URL=postgresql+asyncpg://postgres:postgres@localhost/postgres
 alembic upgrade head            # create tables
-python etl.py                   # seed 40 k rows (set CSV_LIMIT=0 for full load)
+python etl.py                   # seed 100 k rows (set CSV_LIMIT=0 for full load)
 uvicorn app.main:app --reload
 ```
 
